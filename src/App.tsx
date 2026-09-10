@@ -35,6 +35,7 @@ import './App.css'
 import HelpModal from './HelpModal'
 import GenericFeaturePage from './CampusPages'
 import { generateCaptcha, validateCaptcha } from './captcha'
+import { apiUrl } from './api'
 
 type Student = {
   name: string
@@ -105,7 +106,7 @@ function RequestsPage({ requests, onAddRequest, onUpdateRequest }: { requests: C
     if (!editingMessage.trim() || isSavingEdit) return
     setIsSavingEdit(true)
     try {
-      const response = await fetch(`/api/tickets/${encodeURIComponent(request.id)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: editingMessage.trim(), description: editingMessage.trim() }) })
+      const response = await fetch(apiUrl(`/api/tickets/${encodeURIComponent(request.id)}`), { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: editingMessage.trim(), description: editingMessage.trim() }) })
       if (!response.ok) throw new Error('Request could not be updated')
       onUpdateRequest(request.id, editingMessage.trim())
       cancelEditing()
@@ -180,7 +181,7 @@ function App() {
 
   useEffect(() => {
     if (!student) return
-    void fetch(`/api/tickets?student_id=${encodeURIComponent(student.rollNumber)}`)
+    void fetch(apiUrl(`/api/tickets?student_id=${encodeURIComponent(student.rollNumber)}`))
       .then((response) => response.ok ? response.json() as Promise<{ tickets: TicketSummary[] }> : Promise.reject(new Error('Requests unavailable')))
       .then(({ tickets }) => setRequests(tickets.map(toCampusRequest)))
       .catch(() => setRequestError('Requests are temporarily unavailable.'))
@@ -188,7 +189,7 @@ function App() {
 
   async function addRequest(message: string) {
     if (!student) return
-    const response = await fetch('/api/tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_id: student.rollNumber, category: 'General', subject: message, description: message, department: 'Campus Support' }) })
+    const response = await fetch(apiUrl('/api/tickets'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_id: student.rollNumber, category: 'General', subject: message, description: message, department: 'Campus Support' }) })
     if (!response.ok) throw new Error('Request could not be created')
     const result = await response.json() as { ticket_id: string; subject: string; category: string; created_at: string; status: string }
     setRequests((current) => [{ id: result.ticket_id, title: result.subject, category: result.category, date: new Date(result.created_at).toLocaleString(), status: 'In review', tone: 'review' }, ...current])
@@ -205,7 +206,7 @@ function App() {
     setIsSubmitting(true)
     setSubmitted(false)
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(apiUrl('/api/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: query, student_id: student?.rollNumber ?? 'demo-student' }),
@@ -245,7 +246,7 @@ function App() {
 
     setIsRegistering(true)
     try {
-      const response = await fetch('/api/students/register', {
+      const response = await fetch(apiUrl('/api/students/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: studentName, rollNumber }),
@@ -271,7 +272,7 @@ function App() {
 
     setIsRegistering(true)
     try {
-      const response = await fetch('/api/students/login', {
+      const response = await fetch(apiUrl('/api/students/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rollNumber: loginRollNumber }),
@@ -310,7 +311,7 @@ function App() {
           : { ...values, category: activeNav === 'Hostel' && activeAction === 'issue' ? 'Hostel Maintenance' : values.category, student_id: student.rollNumber }
     setIsActionSubmitting(true)
     try {
-      const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      const response = await fetch(apiUrl(endpoint), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       if (!response.ok) throw new Error('Action failed')
       const result = await response.json() as { booking_id?: string; ticket?: TicketSummary }
       setActionNotice(result.booking_id ?? result.ticket?.ticket_id ?? 'Request confirmed')
