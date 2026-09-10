@@ -95,6 +95,11 @@ class SupportRequest(BaseModel):
     contact_method: Literal["Email", "Phone", "Portal"] = "Portal"
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    return {"service": "campusiq-api", "status": "online", "health": "/api/health"}
+
+
 def now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
