@@ -1,0 +1,3 @@
+Campus shuttle routes and operating times are published by the Transport Office. A shuttle booking requires a route, date, time, and passenger count. Report missed pickups with the route and stop details.
+
+Source: Transport Office route guide 2025.

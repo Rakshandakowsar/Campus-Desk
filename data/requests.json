@@ -1,0 +1,35 @@
+[
+  {
+    "id": "CD-2048",
+    "studentId": "23CS1042",
+    "title": "Attendance shortage condonation",
+    "message": "Attendance shortage condonation",
+    "category": "Academics",
+    "department": "Academic Services",
+    "status": "In review",
+    "tone": "review",
+    "createdAt": "2025-09-19T10:42:00.000Z"
+  },
+  {
+    "id": "CD-2031",
+    "studentId": "23CS1042",
+    "title": "Hostel fee receipt for semester 5",
+    "message": "Hostel fee receipt for semester 5",
+    "category": "Fees & finance",
+    "department": "Finance Office",
+    "status": "Resolved",
+    "tone": "resolved",
+    "createdAt": "2025-09-18T16:18:00.000Z"
+  },
+  {
+    "id": "CD-1988",
+    "studentId": "23CS1042",
+    "title": "Bonafide certificate application",
+    "message": "Bonafide certificate application",
+    "category": "Certificates",
+    "department": "Academic Services",
+    "status": "Resolved",
+    "tone": "resolved",
+    "createdAt": "2025-09-12T10:00:00.000Z"
+  }
+]

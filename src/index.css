@@ -1,0 +1,19 @@
+:root {
+  font-family: 'Manrope', 'Avenir Next', sans-serif;
+  color: #17212e;
+  background: #f5f6f1;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #17212e;
+  --line: #e5e8e4;
+  --paper: #fbfcf8;
+  --canvas: #f5f6f1;
+  --navy: #182c3d;
+  --lime: #d9eb5b;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, textarea { font: inherit; }
+button { border: 0; cursor: pointer; }
