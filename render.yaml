@@ -8,4 +8,4 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: ALLOWED_ORIGINS
-        sync: false
+        value: https://rakshandakowsar.github.io
