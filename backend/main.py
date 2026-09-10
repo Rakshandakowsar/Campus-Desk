@@ -17,8 +17,9 @@ from .services.rag_service import KNOWLEDGE_PATH, answer_from_knowledge
 
 initialize_database()
 app = FastAPI(title="CampusIQ API", version="1.0.0")
-configured_origins = os.getenv("ALLOWED_ORIGINS") or "http://localhost:5173,http://127.0.0.1:5173,https://rakshandakowsar.github.io"
+configured_origins = os.getenv("ALLOWED_ORIGINS", "")
 allowed_origins = [origin.strip() for origin in configured_origins.split(",") if origin.strip()]
+allowed_origins.extend(origin for origin in ("http://localhost:5173", "http://127.0.0.1:5173", "https://rakshandakowsar.github.io") if origin not in allowed_origins)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
